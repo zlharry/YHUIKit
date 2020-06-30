@@ -7,23 +7,27 @@
 //
 
 #import "YHViewController.h"
+#import "YHHUD.h"
+#import "YHAlertController.h"
 
 @interface YHViewController ()
-
+/** <#text#> */
+@property (nonatomic, weak) YHHUD *hud;
 @end
 
 @implementation YHViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    self.hud = [YHHUD showLoadingOnView:self.view];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.hud hideAnimated:YES];
+        
+    [YHHUD showMessageOnView:self.view message:@"kdfadsf"];
+    [YHAlertController showFromController:self title:@"dfasd" message:@"dfasd" preferredStyle:UIAlertControllerStyleAlert andConfigBlcok:^(UIAlertController * _Nonnull alertVC) {
+        ;
+    }];
 }
 
 @end

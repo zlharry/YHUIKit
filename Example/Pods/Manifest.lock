@@ -1,0 +1,31 @@
+PODS:
+  - Expecta (1.0.6)
+  - MBProgressHUD (1.2.0)
+  - Specta (1.0.7)
+  - YHUIKit (0.1.0):
+    - MBProgressHUD (= 1.2.0)
+
+DEPENDENCIES:
+  - Expecta
+  - Specta
+  - YHUIKit (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Expecta
+    - MBProgressHUD
+    - Specta
+
+EXTERNAL SOURCES:
+  YHUIKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
+  YHUIKit: ce1af4264c681e884e52cd12492725c9a181b011
+
+PODFILE CHECKSUM: 101fc3021166d87f75d04bc969140610c661196b
+
+COCOAPODS: 1.6.2

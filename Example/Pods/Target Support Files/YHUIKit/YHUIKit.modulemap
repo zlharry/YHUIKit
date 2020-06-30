@@ -1,0 +1,6 @@
+framework module YHUIKit {
+  umbrella header "YHUIKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

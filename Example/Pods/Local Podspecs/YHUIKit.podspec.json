@@ -1,0 +1,27 @@
+{
+  "name": "YHUIKit",
+  "version": "0.1.0",
+  "summary": "A short description of YHUIKit.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/zlharry/YHUIKit",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "yuanhua_zhong@icloud.com": "yuanhua_zhong@icloud.com"
+  },
+  "source": {
+    "git": "https://github.com/zlharry/YHUIKit.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "YHUIKit/Classes/**/*",
+  "dependencies": {
+    "MBProgressHUD": [
+      "1.2.0"
+    ]
+  }
+}
