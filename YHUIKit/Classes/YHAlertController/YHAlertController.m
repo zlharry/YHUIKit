@@ -8,6 +8,11 @@
 
 #import "YHAlertController.h"
 
+@interface YHAlertController ()
+/** 是否已经观察了Window */
+@property (nonatomic, assign) BOOL haveAddWindowAbserver;
+@end
+
 @implementation YHAlertController
 
 /// 弹出显示
@@ -21,9 +26,28 @@
         [window.rootViewController presentViewController:self
                                                 animated:YES
                                               completion:nil];
+        
+        if (!self.haveAddWindowAbserver) {
+            [window addObserver:self forKeyPath:@"rootViewController" options:NSKeyValueObservingOptionNew context:nil];
+        }
     }
     
 
+}
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"rootViewController"]) {
+        [self dismissViewControllerAnimated:NO completion:nil];
+        [self showFromController:nil];
+    }
+}
+
+- (void)dealloc {
+    if (self.haveAddWindowAbserver) {
+        UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+        [window removeObserver:self forKeyPath:@"rootViewController"];
+    }
 }
 
 /// 弹出显示
