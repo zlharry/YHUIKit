@@ -11,6 +11,8 @@
 @interface YHAlertController ()
 /** 是否已经观察了Window */
 @property (nonatomic, assign) BOOL haveAddWindowAbserver;
+/** <#text#> */
+@property (nonatomic, weak) UIWindow *supWindow;
 @end
 
 @implementation YHAlertController
@@ -27,9 +29,7 @@
                                                 animated:YES
                                               completion:nil];
         
-        if (!self.haveAddWindowAbserver) {
-            [window addObserver:self forKeyPath:@"rootViewController" options:NSKeyValueObservingOptionNew context:nil];
-        }
+        [self addWindowAbserverForWindow:window];
     }
     
 
@@ -39,14 +39,45 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"rootViewController"]) {
         [self dismissViewControllerAnimated:NO completion:nil];
+        
         [self showFromController:nil];
     }
 }
 
 - (void)dealloc {
+    [self removeObserver];
+}
+
+/// 移除观察者
+- (void)removeObserver {
+    if (self.haveAddWindowAbserver && self.supWindow) {
+        [self.supWindow removeObserver:self forKeyPath:@"rootViewController"];
+        
+        self.supWindow = nil;
+        self.haveAddWindowAbserver = NO;
+    }
+}
+
+/// 增加观察
+- (void)addWindowAbserverForWindow:(UIWindow *)window {
     if (self.haveAddWindowAbserver) {
-        UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-        [window removeObserver:self forKeyPath:@"rootViewController"];
+        if (self.supWindow == window) {
+            // 已经添加了
+            return;
+        }
+        else {
+            [self.supWindow removeObserver:self forKeyPath:@"rootViewController"]; // 先移除上一个观察
+            
+            // 再新增加新观察
+            [window addObserver:self forKeyPath:@"rootViewController" options:NSKeyValueObservingOptionNew context:nil];
+            self.haveAddWindowAbserver = YES;
+            self.supWindow = window;
+        }
+    } else {
+        
+        [window addObserver:self forKeyPath:@"rootViewController" options:NSKeyValueObservingOptionNew context:nil];
+        self.haveAddWindowAbserver = YES;
+        self.supWindow = window;
     }
 }
 
